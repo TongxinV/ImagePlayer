@@ -4,8 +4,6 @@
 
 
 // ∫Í∂®“Â
-#define FBDEVICE	"/dev/fb0"
- 
 #define WIDTH		1024	
 #define HEIGHT		600
  
@@ -20,10 +18,9 @@
  
 
 struct framebuffer{
+	const char	*path;
 	int fd;
 	unsigned int *pfb;
-	int  (*open)(struct framebuffer *fb);
-	void (*close)(struct framebuffer *fb);
 };
 
 struct draw_info{
@@ -42,6 +39,9 @@ void fb_close(struct framebuffer *fb);
 void fb_draw_back(struct draw_info *draw_info);
 void fb_show_image(struct draw_info *draw_info);
 
+
+#define DECLARE_FBDEVICE(name, path) \
+struct framebuffer name = {path, -1, NULL}
 
 
 

@@ -5,8 +5,10 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <framebuffer.h>
+#include <Bitmap.h>
 //#include "display/Image_001.h"
 //#include "display/Image_002.h"
 #include "display/Image_003.h"
@@ -14,12 +16,7 @@
 
 int main(void)
 {
-	struct framebuffer fb0;
-
-	fb0.fd = -1;
-	fb0.pfb= NULL;
-	fb0.open  = fb_open;
-	fb0.close = fb_close;
+	DECLARE_FBDEVICE(fb0, "/dev/fb0");
 
 	struct draw_info draw_info0;
 
@@ -32,15 +29,29 @@ int main(void)
 	
 	printf("hello world.\n");
 
-	fb0.open(&fb0);
+	fb_open(&fb0);
 
 	draw_info0.pstar = fb0.pfb;
-
-	//fb_draw_back(&draw_info0);
-
+	
 	fb_show_image(&draw_info0);
 
-	fb0.close(&fb0);
+	C1Image* img0;
+	
+	img0 = Read24BitBmpFile2Img("tu004.bmp");
+
+	draw_info0.x0    =  0;
+	draw_info0.y0    =  0;
+	draw_info0.width = img0->width;
+	draw_info0.height= img0->height;
+	draw_info0.color = RED;
+	draw_info0.pic   = img0->imageData;
+
+	fb_show_image(&draw_info0);
+	
+	free(img0->imageData);
+	free(img0);
+	
+	fb_close(&fb0);
 	
 	return 0;
 }

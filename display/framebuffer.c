@@ -14,7 +14,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include <framebuffer.h>		
+#include "framebuffer.h"		
 
 int fb_open(struct framebuffer *fb)
 {
@@ -24,12 +24,12 @@ int fb_open(struct framebuffer *fb)
 	struct fb_var_screeninfo vinfo = {0};
 	 
 	// 第1步：打开设备
-	fb->fd = open(FBDEVICE, O_RDWR);
+	fb->fd = open(fb->path, O_RDWR);
 	if (fb->fd < 0){
 		perror("open");
 		return -1;
 	}
-	printf("open %s success.\n", FBDEVICE);
+	printf("open %s success.\n", fb->path);
 	 
 	// 第2步：获取设备的硬件信息
 	ret = ioctl(fb->fd, FBIOGET_FSCREENINFO, &finfo);
@@ -90,7 +90,7 @@ int fb_open(struct framebuffer *fb)
 void fb_close(struct framebuffer *fb)
 {
 	close(fb->fd);
-	printf("close %s success.\n", FBDEVICE);
+	printf("close %s success.\n", fb->path);
 }
  
  
@@ -123,7 +123,7 @@ void fb_show_image(struct draw_info *draw_info)
 		{
 			cnt = (draw_info->width)*y+x;
 			cnt*=3;
-			*(p + y * WIDTH + x) = ((img[cnt+0] << 16) | (img[cnt+1] << 8) | (img[cnt+2] << 0));
+			*(p + y * WIDTH + x) = ((img[cnt+2] << 16) | (img[cnt+1] << 8) | (img[cnt+0] << 0));//byte[0-2]:B G R
 		}
 	}
 }
