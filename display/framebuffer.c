@@ -14,7 +14,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include <framebuffer.h>
+#include <framebuffer.h>		
 
 int fb_open(struct framebuffer *fb)
 {
@@ -94,33 +94,39 @@ void fb_close(struct framebuffer *fb)
 }
  
  
-void fb_draw_back(struct draw_info *draw_info, struct framebuffer *fb)
+void fb_draw_back(struct draw_info *draw_info)
 {
+	unsigned int *p = draw_info->pstar;
+	
 	unsigned int x, y;
 
 	for (y=0; y<draw_info->height; y++)
 	{
 		for (x=0; x<draw_info->width; x++)
 		{
-			*(fb->pfb + y * WIDTH + x) = draw_info->color;
+			*(p + y * WIDTH + x) = draw_info->color;
 		}
 	}
 }
  
+void fb_show_image(struct draw_info *draw_info)
+{
+	unsigned int *p = draw_info->pstar;
+	const unsigned char *img = draw_info->pic;
+	
+	unsigned int x, y;
+	unsigned int cnt ;
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+	for (y=draw_info->y0; (y<draw_info->height)&&(y<HEIGHT); y++)
+	{
+		for (x=draw_info->x0; (x<draw_info->width)&&(x<WIDTH); x++)
+		{
+			cnt = (draw_info->width)*y+x;
+			cnt*=3;
+			*(p + y * WIDTH + x) = ((img[cnt+0] << 16) | (img[cnt+1] << 8) | (img[cnt+2] << 0));
+		}
+	}
+}
 
 
 

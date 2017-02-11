@@ -27,15 +27,20 @@ struct framebuffer{
 };
 
 struct draw_info{
+	unsigned int *pstar;
+	unsigned int x0;
+	unsigned int y0;
 	unsigned int width;
 	unsigned int height;
 	unsigned int color;
+	const unsigned char *pic;
 };
 
 // º¯ÊýÉùÃ÷
 int  fb_open(struct framebuffer *fb);
 void fb_close(struct framebuffer *fb);
-void fb_draw_back(struct draw_info *draw_info, struct framebuffer *fb);
+void fb_draw_back(struct draw_info *draw_info);
+void fb_show_image(struct draw_info *draw_info);
 
 
 
