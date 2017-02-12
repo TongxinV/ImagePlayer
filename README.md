@@ -8,5 +8,5 @@
 * BMP图像信息提取 -|- 颜色序转变 -|- 显示
 
 
-@TongxinV
-s
+----
+author：@TongxinV
