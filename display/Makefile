@@ -1,3 +1,3 @@
 obj-y += framebuffer.o
-obj-y += bitmap.o
+obj-y += c1bitmap.o
 obj-y += c1jpeg.o

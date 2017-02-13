@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 #include <framebuffer.h>
-#include <Bitmap.h>
+#include <c1bitmap.h>
 #include <c1jpeg.h>
 
 //#include "display/Image_001.h"
