@@ -2,6 +2,8 @@
 #define _BITMAP_H_
 
 
+#include <c1image.h>
+
 typedef unsigned char BYTE;  
 typedef unsigned short WORD;  
 typedef unsigned long DWORD;  
@@ -48,14 +50,6 @@ typedef struct tagRGBQUAD {
 	BYTE     rgbReserved; 		//±£¡Ù÷µ  
 } RGBQUAD;
 
-
-typedef struct tagImage
-{  
-    int width;  
-    int height;  
-    int channels;  
-    unsigned char* imageData;  
-}C1Image; 
 
 
 void showBmpHead(BITMAPFILEHEADER* pBmpHead); 

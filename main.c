@@ -9,6 +9,8 @@
 
 #include <framebuffer.h>
 #include <Bitmap.h>
+#include <c1jpeg.h>
+
 //#include "display/Image_001.h"
 //#include "display/Image_002.h"
 #include "display/Image_003.h"
@@ -35,6 +37,7 @@ int main(void)
 	
 	fb_show_image(&draw_info0);
 
+#if 0
 	C1Image* img0;
 	
 	img0 = Read24BitBmpFile2Img("tu004.bmp");
@@ -50,6 +53,22 @@ int main(void)
 	
 	free(img0->imageData);
 	free(img0);
+#endif
+
+	C1Image* img1;
+
+	img1 = ReadJPEGFile2Img("tu001.jpg");
+
+	draw_info0.x0    =  0;
+	draw_info0.y0    =  0;
+	draw_info0.width = img1->width;
+	draw_info0.height= img1->height;
+	draw_info0.color = RED;
+	draw_info0.pic   = img1->imageData;
+
+	fb_show_image(&draw_info0);
+
+	free(img1);
 	
 	fb_close(&fb0);
 	

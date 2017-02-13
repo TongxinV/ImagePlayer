@@ -78,7 +78,6 @@ C1Image* Read24BitBmpFile2Img(const char* path)
 	int w = 0;  	//width
 	int h = 0;  	//height
 	int i = 0;
-//	int step = 0;  
 //	int offset = 0;
 //	unsigned char pixVal;  
 //	RGBQUAD* quad;  
@@ -87,11 +86,11 @@ C1Image* Read24BitBmpFile2Img(const char* path)
 	/* Step 1 ...*/
 	pFile = fopen(path, "rb");	
 	if (!pFile){ 
-		printf("file %s open fail!\n", path);
+		printf(stderr, "file %s open fail!\n", path);
 		free(bmpImg);  
 		return NULL;  
 	}
-	printf("file %s open success..\n", path);
+	fprintf(stdout, "file %s open success..\n", path);
 
 	/* Step 2.1 ...read file Type*/
 	fread(&fileType, sizeof(unsigned short), 1, pFile);
