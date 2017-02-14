@@ -23,7 +23,7 @@ struct framebuffer{
 	unsigned int *pfb;
 };
 
-struct draw_info{
+typedef struct draw_info{
 	unsigned int *pstar;
 	unsigned int x0;
 	unsigned int y0;
@@ -31,7 +31,7 @@ struct draw_info{
 	unsigned int height;
 	unsigned int color;
 	const unsigned char *pic;
-};
+}draw_info_t;
 
 // º¯ÊıÉùÃ÷
 int  fb_open(struct framebuffer *fb);

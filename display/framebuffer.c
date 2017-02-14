@@ -123,7 +123,7 @@ void fb_show_image(struct draw_info *draw_info)
 		{
 			cnt = (draw_info->width)*y+x;
 			cnt*=3;
-			*(p + y * WIDTH + x) = ((img[cnt+2] << 16) | (img[cnt+1] << 8) | (img[cnt+0] << 0));//byte[0-2]:B G R
+			*(p + y * WIDTH + x) = ((img[cnt+0] << 16) | (img[cnt+1] << 8) | (img[cnt+2] << 0));//byte[0-2]:R G B
 		}
 	}
 }

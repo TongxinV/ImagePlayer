@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <Bitmap.h>
+#include <c1bitmap.h>
 
 
 
@@ -86,7 +86,7 @@ C1Image* Read24BitBmpFile2Img(const char* path)
 	/* Step 1 ...*/
 	pFile = fopen(path, "rb");	
 	if (!pFile){ 
-		printf(stderr, "file %s open fail!\n", path);
+		fprintf(stderr, "file %s open fail!\n", path);
 		free(bmpImg);  
 		return NULL;  
 	}
@@ -122,14 +122,14 @@ C1Image* Read24BitBmpFile2Img(const char* path)
 		fseek(pFile,bmpFileHeader.bfOffBits,SEEK_SET);
 
 		for(i=0;i<h;i++)  
-        {  
+        {
             if(fread(bmpImg->imageData+(h-1-i)*w*3,sizeof(BYTE),w*3,pFile)!=w*3)  
             {   
-                fclose(pFile);  
+                fclose(pFile);
                 free(bmpImg);   
                 return NULL;  
             }  
-            fseek(pFile,(3*w+3)/4*4-3*w,SEEK_CUR);  
+            fseek(pFile,(3*w+3)/4*4-3*w,SEEK_CUR);   //不知其作用为何。去掉也能正确执行
         }
 	}
 

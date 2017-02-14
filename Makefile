@@ -17,10 +17,10 @@ export AS LD CC CPP AR NM STRIP OBJCOPY OBJDUMP
 # 编译器在编译时的参数设置
 CFLAGS := -Wall -O2 -g
 # 添加头文件路径，不添加的话include目录下的头文件编译时找不到
-CFLAGS += -I $(shell pwd)/include -I/opt/libjpeg-9/include
+CFLAGS += -I $(shell pwd)/include -I/opt/lib-codec/include
 
 
-LDFLAGS := -ljpeg -L/opt/libjpeg-9/lib
+LDFLAGS := -ljpeg -lpng -lz -L/opt/lib-codec/lib
 
 export CFLAGS LDFLAGS
 

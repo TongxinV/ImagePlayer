@@ -8,39 +8,28 @@
 #include <stdlib.h>
 
 #include <framebuffer.h>
-#include <c1bitmap.h>
-#include <c1jpeg.h>
+#include <c1image.h>
 
 //#include "display/Image_001.h"
 //#include "display/Image_002.h"
-#include "display/Image_003.h"
+//#include "display/Image_003.h"
 
 
 int main(void)
 {
 	DECLARE_FBDEVICE(fb0, "/dev/fb0");
 
-	struct draw_info draw_info0;
-
-	draw_info0.x0    =  100;
-	draw_info0.y0    =  100;
-	draw_info0.width = 1024;
-	draw_info0.height=  720;
-	draw_info0.color =  RED;
-	draw_info0.pic   = Image_003;
-	
-	printf("hello world.\n");
-
 	fb_open(&fb0);
 
-	draw_info0.pstar = fb0.pfb;
-	
-	fb_show_image(&draw_info0);
+	printf("hello world.\n");
 
+	ImageDispaly(&fb0, "tu005.bmp");
+
+	
 #if 0
 	C1Image* img0;
 	
-	img0 = Read24BitBmpFile2Img("tu004.bmp");
+	img0 = Read24BitBmpFile2Img("tu005.bmp");
 
 	draw_info0.x0    =  0;
 	draw_info0.y0    =  0;
@@ -55,6 +44,7 @@ int main(void)
 	free(img0);
 #endif
 
+#if 0
 	C1Image* img1;
 
 	img1 = ReadJPEGFile2Img("tu001.jpg");
@@ -68,8 +58,10 @@ int main(void)
 
 	fb_show_image(&draw_info0);
 
+	free(img1->imageData);
 	free(img1);
-	
+#endif
+
 	fb_close(&fb0);
 	
 	return 0;
