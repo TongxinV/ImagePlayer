@@ -23,7 +23,7 @@ int main(void)
 
 	printf("hello world.\n");
 
-	ImageDispaly(&fb0, "tu005.bmp");
+	ImageDispaly(&fb0, "tu006.png");
 
 	
 #if 0

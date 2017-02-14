@@ -114,6 +114,21 @@ int ImageDispaly(struct framebuffer * fb, const char * path)
 		case  IMGPNG:
 			fprintf(stdout, "file %s is  PNG picture.\n", path);
 
+			pImag = ReadPNGFile2Img(path);
+
+			p_draw_info->pstar = fb->pfb;
+			p_draw_info->x0  =	0;
+			p_draw_info->y0  =	0;
+			p_draw_info->width = pImag->width;
+			p_draw_info->height= pImag->height;
+			p_draw_info->color = RED;
+			p_draw_info->pic   = pImag->imageData;
+						
+			fb_show_image(p_draw_info);
+						
+			free(pImag->imageData);
+			free(pImag);
+			
 			break;
 		
         default:fprintf(stderr, "file %s not image file!\n", path);
