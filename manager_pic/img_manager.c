@@ -6,7 +6,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <linux/input.h>
 
 
 #include "img_manager.h"
@@ -23,7 +22,8 @@
  * 而且它有自己的内存空间和在mian定义一个数组一样的生命周期，不同的是作用域不同
  */
 static FileManageinfo images[MAX_IMG_CNT];
-static unsigned int   image_index = 0;
+static unsigned int   image_index = 0;		//记录存在的图片数量
+static unsigned int   image_count = 0;		//当前显示的图片序号
 
 
 static int recodnise_add_image(const char * path)
@@ -161,6 +161,7 @@ void manager_init2(const char * basepath)
 			manager_init2(base);
 		}
 	}
+	
 }
 
 
@@ -171,16 +172,14 @@ void manager_init2(const char * basepath)
 
 
 
-//扫描数组得到下一图片信息
-
-FileManageinfo* ExtractImgfile(int index)
+//扫描数组得到某一图片信息
+FileManageinfo* ExtractImgfile(unsigned int index)
 {	
 	FileManageinfo* pInfo;
 	
-	if(index > image_index)
+	if(index > image_index )
 	{
 		pInfo = &images[image_index];
-		
 	}
 	else 
 	{
@@ -188,10 +187,27 @@ FileManageinfo* ExtractImgfile(int index)
 	}
 
 	return pInfo;
+}
 
+//得到下一张图片的信息
+FileManageinfo* get_next_imgfile(void)
+{
+	if(image_count == (image_index-1))
+		return ExtractImgfile(image_count-1);
+	
+	return ExtractImgfile(image_count++);
 }
 
 
+//得到上一张图片的信息
+FileManageinfo* get_last_imgfile(void)
+{
+
+	if(image_count == 0)
+		return ExtractImgfile(image_count);
+	
+	return ExtractImgfile(image_count--);
+}
 
 
 

@@ -14,11 +14,12 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
+#include <c1config.h>
 #include "framebuffer.h"
 
 
 
-DECLARE_FBDEVICE(fb, "/dev/fb0");
+DECLARE_FBDEVICE(fb, FBDEVICE);
 
 
 void fb_init(void){ fb_open(&fb); }
@@ -113,7 +114,7 @@ void fb_draw_back(struct draw_info *draw_info)
 	{
 		for (x=0; x<draw_info->width; x++)
 		{
-			*(p + y * WIDTH + x) = draw_info->color;
+			*(p + y * X210_WIDTH + x) = draw_info->color;
 		}
 	}
 }
@@ -126,13 +127,13 @@ void fb_show_image(struct draw_info *draw_info)
 	unsigned int x, y;
 	unsigned int cnt ;
 
-	for (y=draw_info->y0; (y<draw_info->height)&&(y<HEIGHT); y++)
+	for (y=draw_info->y0; (y<draw_info->height)&&(y<X210_HEIGHT); y++)
 	{
-		for (x=draw_info->x0; (x<draw_info->width)&&(x<WIDTH); x++)
+		for (x=draw_info->x0; (x<draw_info->width)&&(x<X210_WIDTH); x++)
 		{
 			cnt = (draw_info->width)*y+x;
 			cnt*=3;
-			*(p + y * WIDTH + x) = ((img[cnt+0] << 16) | (img[cnt+1] << 8) | (img[cnt+2] << 0));//byte[0-2]:R G B
+			*(p + y * X210_WIDTH + x) = ((img[cnt+0] << 16) | (img[cnt+1] << 8) | (img[cnt+2] << 0));//byte[0-2]:R G B
 		}
 	}
 }

@@ -1,12 +1,6 @@
 #ifndef _FRAMEBUFFER_H_
 #define _FRAMEBUFFER_H_
 
-
-
-// ∫Í∂®“Â
-#define WIDTH		1024	
-#define HEIGHT		600
- 
  
 #define WHITE		0xffffffff			// test ok
 #define BLACK		0x00000000

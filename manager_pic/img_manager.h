@@ -26,9 +26,12 @@ void manager_init(const char * basepath);
 
 void manager_init2(const char * basepath);
 
-FileManageinfo* ExtractImgfile(int index);
+FileManageinfo* ExtractImgfile(unsigned int index);
 
 
+FileManageinfo* get_next_imgfile(void);
+
+FileManageinfo* get_last_imgfile(void);
 
 #endif
 

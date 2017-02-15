@@ -8,10 +8,12 @@
 #include <stdlib.h>
 
 #include <framebuffer.h>
-#include <c1image.h>
 #include "manager_pic/img_manager.h"
 #include "mainloop/loop.h"
+#include "input/c1input.h"
 
+
+//#include <c1image.h>
 //#include "display/Image_001.h"
 //#include "display/Image_002.h"
 //#include "display/Image_003.h"
@@ -23,8 +25,12 @@ int main(void)
 
 	manager_init2("./picture");
 
+	touchscreen_init();
+
 	mainloop();
 
+	touchscreen_close();
+	
 	fb_release();
 	
 	return 0;

@@ -36,7 +36,7 @@ obj-y += main.o
 obj-y += display/
 obj-y += manager_pic/
 obj-y += mainloop/
-
+obj-y += input/
 
 all: 
 	make -C ./ -f $(TOPDIR)/Makefile.build

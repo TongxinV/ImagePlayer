@@ -16,9 +16,6 @@ typedef struct tagImage
 
 int ImageDispaly(const char * path);
 
-
-
-
 #endif
 
 
