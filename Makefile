@@ -32,8 +32,11 @@ TARGET := imageplayer
 
 
 obj-y += main.o
-
+# 添加顶层目录下的子文件夹
 obj-y += display/
+obj-y += manager_pic/
+obj-y += mainloop/
+
 
 all: 
 	make -C ./ -f $(TOPDIR)/Makefile.build

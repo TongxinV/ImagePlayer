@@ -2,9 +2,6 @@
 #define _C1IMAGE_H_
 
 
-#include <framebuffer.h>
-
-
 typedef struct tagImage
 {
 	unsigned short fileType;
@@ -17,7 +14,7 @@ typedef struct tagImage
 
 
 
-int ImageDispaly(struct framebuffer * fb, const char * path);
+int ImageDispaly(const char * path);
 
 
 

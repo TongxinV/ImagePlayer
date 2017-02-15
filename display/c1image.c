@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <framebuffer.h>
 #include <c1image.h>
-
 
 #include <c1bitmap.h>
 #include <c1jpeg.h>
@@ -41,15 +41,13 @@ static int recodniseType(FILE * pFile)
 		return  IMGPNG;
 	}
 
-	
-	fclose(pFile);
-	
 	return 0;
 	
 }
 
 
-int ImageDispaly(struct framebuffer * fb, const char * path)
+
+int ImageDispaly(const char * path)
 {
 	FILE * imgFile;
 	C1Image* pImag;
@@ -75,7 +73,6 @@ int ImageDispaly(struct framebuffer * fb, const char * path)
 			
 			pImag = ReadJPEGFile2Img(path);
 			
-			p_draw_info->pstar = fb->pfb;
 			p_draw_info->x0	 =	0;
 			p_draw_info->y0	 =	0;
 			p_draw_info->width = pImag->width;
@@ -96,7 +93,6 @@ int ImageDispaly(struct framebuffer * fb, const char * path)
 
 			pImag = Read24BitBmpFile2Img(path);
 			
-			p_draw_info->pstar = fb->pfb;
 			p_draw_info->x0	 =	0;
 			p_draw_info->y0	 =	0;
 			p_draw_info->width = pImag->width;
@@ -116,7 +112,6 @@ int ImageDispaly(struct framebuffer * fb, const char * path)
 
 			pImag = ReadPNGFile2Img(path);
 
-			p_draw_info->pstar = fb->pfb;
 			p_draw_info->x0  =	0;
 			p_draw_info->y0  =	0;
 			p_draw_info->width = pImag->width;

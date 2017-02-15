@@ -14,7 +14,16 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include "framebuffer.h"		
+#include "framebuffer.h"
+
+
+
+DECLARE_FBDEVICE(fb, "/dev/fb0");
+
+
+void fb_init(void){ fb_open(&fb); }
+
+void fb_release(void){ fb_close(&fb); }
 
 int fb_open(struct framebuffer *fb)
 {
@@ -96,7 +105,7 @@ void fb_close(struct framebuffer *fb)
  
 void fb_draw_back(struct draw_info *draw_info)
 {
-	unsigned int *p = draw_info->pstar;
+	unsigned int *p = fb.pfb;
 	
 	unsigned int x, y;
 
@@ -111,7 +120,7 @@ void fb_draw_back(struct draw_info *draw_info)
  
 void fb_show_image(struct draw_info *draw_info)
 {
-	unsigned int *p = draw_info->pstar;
+	unsigned int *p = fb.pfb;
 	const unsigned char *img = draw_info->pic;
 	
 	unsigned int x, y;

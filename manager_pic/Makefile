@@ -1,0 +1,1 @@
+obj-y += img_manager.o
