@@ -6,21 +6,21 @@
 > 图片编解码
 
 ### Environment
-```c
+```s
 Arch：s5pv210 cortex-A8
 OS：linux2.6.35
 ```
 
 ### software development process
 
-```c
-环境搭建和基础环境确认
-framebuffer设置及常见功能添加
-BMP 图像数据catch |- 色序转变 -|- 显示
-JPEG库的移植和使用 |- 阅读文档 -|- 显示
-PNG.库的移植和使用 |- 阅读文档 -|- 显示
-图片管理器简单实现
-实现触摸翻页
+```bash
+	# 环境搭建和基础环境确认
+	# framebuffer设置及常见功能添加
+	# BMP 图像数据catch |- 色序转变 -|- 显示
+	# JPEG库的移植和使用 |- 阅读文档 -|- 显示
+	# PNG.库的移植和使用 |- 阅读文档 -|- 显示
+	# 图片管理器简单实现
+	# 实现触摸翻页
 ```
 
 ### Summary
@@ -39,3 +39,4 @@ PNG.库的移植和使用 |- 阅读文档 -|- 显示
 
 ----
 author：@TongxinV
+	
