@@ -1,6 +1,9 @@
 #ifndef _IMG_MANAGER_H_
 #define _IMG_MANAGER_H_
 
+#include <linux/list.h>
+
+
 
 #define LENPATHNAME 256
 
@@ -16,6 +19,7 @@ typedef enum tagfileType
 
 
 typedef struct tagFileManageinfo{
+	struct list_head list;
 	char pathname[LENPATHNAME];
 	fileType_e Type;
 }FileManageinfo;
@@ -29,9 +33,16 @@ void manager_init2(const char * basepath);
 FileManageinfo* ExtractImgfile(unsigned int index);
 
 
-FileManageinfo* get_next_imgfile(void);
+//FileManageinfo* get_next_imgfile(void);
 
-FileManageinfo* get_last_imgfile(void);
+//FileManageinfo* get_last_imgfile(void);
+
+FileManageinfo* get_first_imgfile();
+
+FileManageinfo* get_next_imgfile(FileManageinfo * c);
+
+FileManageinfo* get_last_imgfile(FileManageinfo * c);
+
 
 #endif
 

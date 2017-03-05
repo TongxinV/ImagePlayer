@@ -13,6 +13,7 @@
 
 
 #define MAX_IMG_CNT 100
+LIST_HEAD(im_list);
 
 
 
@@ -24,7 +25,6 @@
 static FileManageinfo images[MAX_IMG_CNT];
 static unsigned int   image_index = 0;		//记录存在的图片数量
 static unsigned int   image_count = 0;		//当前显示的图片序号
-
 
 static int recodnise_add_image(const char * path)
 {
@@ -70,6 +70,63 @@ static int recodnise_add_image(const char * path)
 	return 0;
 	
 }
+
+/*  use list recodnise_add_image */
+
+static int recodnise_add_image2(const char * path)
+{
+	FileManageinfo *temp = (FileManageinfo *)malloc(sizeof(FileManageinfo));
+	FILE * pFile;
+	char type_buffer[8] = {0};
+
+	INIT_LIST_HEAD(&temp->list);
+	
+	if((pFile=fopen(path, "rb"))==NULL){
+		fprintf(stderr, "file %s open fail!\n", path);
+		return -1;
+	}
+	fprintf(stdout, "file %s open success..\n", path);
+
+
+	if(fread(type_buffer, 1, 8, pFile)!=8){
+		fprintf(stderr, "file read fail!\n");
+		return -1;
+	}
+
+	if((0xff == type_buffer[0]) && (0xd8 == type_buffer[1]))
+	{
+		strcpy(temp->pathname, path);
+		temp->Type = IMG_TYPE_JPEG;
+		list_add(&temp->list, &im_list);
+	}
+	
+	else if((0x42 == type_buffer[0]) && (0x4d == type_buffer[1]))
+	{
+		strcpy(temp->pathname, path);
+		temp->Type = IMG_TYPE_BMP;
+		list_add(&temp->list, &im_list);
+	}
+	
+	else if((0x89 == type_buffer[0]) && (0x50 == type_buffer[1]))
+	{
+		strcpy(temp->pathname, path);
+		temp->Type = IMG_TYPE_PNG;
+		list_add(&temp->list, &im_list);
+	}
+
+	else 
+	{
+		free(temp);
+	}
+	
+	fclose(pFile);
+	
+	return 0;
+	
+}
+
+
+
 
 /* 扫描已存在的图片，将信息保存到数组
  * readdir函数每调用一次就会返回opendir打开的basepath目录下的一个文件，直到
@@ -123,7 +180,6 @@ void manager_init(const char * basepath)
 }
 
 
-
 // 用lstat来读取文件属性并判断文件类型
 void manager_init2(const char * basepath)
 {
@@ -161,6 +217,8 @@ void manager_init2(const char * basepath)
 			manager_init2(base);
 		}
 	}
+
+
 	
 }
 
@@ -188,7 +246,7 @@ FileManageinfo* ExtractImgfile(unsigned int index)
 
 	return pInfo;
 }
-
+#if 0
 //得到下一张图片的信息
 FileManageinfo* get_next_imgfile(void)
 {
@@ -209,7 +267,36 @@ FileManageinfo* get_last_imgfile(void)
 	return ExtractImgfile(image_count--);
 }
 
+#endif
 
+
+//打开图片管理器显示第一张图片
+FileManageinfo* get_first_imgfile()
+{	
+	if(!list_empty(&im_list))
+		return NULL;
+
+	return list_entry(im_list.next, FileManageinfo, list);
+}
+
+//得到下一张图片的信息
+FileManageinfo* get_next_imgfile(FileManageinfo * c)
+{
+	if(c->list.next == &im_list)
+		return c;
+		
+	return list_entry(c->list.next, typeof(*c), list);
+}
+
+
+//得到上一张图片的信息
+FileManageinfo* get_last_imgfile(FileManageinfo * c)
+{
+	if(c->list.prev == &im_list)
+		return c;
+	
+	return list_entry(c->list.prev, typeof(*c), list);
+}
 
 
 

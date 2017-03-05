@@ -16,8 +16,8 @@ void mainloop(void)
 	FileManageinfo * Info;
 
 	
-	Info = ExtractImgfile(0);
-	ImageDispaly(Info->pathname);//开机显示第一张图片
+	Info = get_first_imgfile();//打开图片管理器显示第一张图片
+	ImageDispaly(Info->pathname);
 	
 	while(1)
 	{
@@ -28,14 +28,16 @@ void mainloop(void)
 			printf("2.\n");
 			if ((ev->value >= 0) && (ev->value < 100))
 			{
-				Info = get_last_imgfile();
+				//Info = get_last_imgfile();
+				Info = get_last_imgfile(Info);
 				printf("pathname = %s.\n", Info->pathname);
 				ImageDispaly(Info->pathname);
 			}
 
 			else if((ev->value > X210_WIDTH-100) && (ev->value <= X210_WIDTH))
 			{
-				Info = get_next_imgfile();
+				//Info = get_next_imgfile();
+				Info = get_next_imgfile(Info);
 				printf("pathname = %s.\n", Info->pathname);
 				ImageDispaly(Info->pathname);
 			}
